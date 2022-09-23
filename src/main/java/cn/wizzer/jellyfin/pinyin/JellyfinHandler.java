@@ -17,7 +17,7 @@ import java.util.List;
  * @author wizzer.cn
  */
 @IocBean
-public class JellyfinHandle {
+public class JellyfinHandler {
     private final static Log log = Logs.get();
     private String domain = "";
     private String key = "";

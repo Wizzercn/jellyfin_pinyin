@@ -20,7 +20,7 @@ public class MainLauncher {
     }
 
     public void init() throws Exception {
-        ioc.get(JellyfinHandle.class).init();
+        ioc.get(JellyfinHandler.class).init();
     }
 
 }
