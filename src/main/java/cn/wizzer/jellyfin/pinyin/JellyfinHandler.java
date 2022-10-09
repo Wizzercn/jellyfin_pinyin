@@ -12,6 +12,7 @@ import org.nutz.log.Logs;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author wizzer.cn
@@ -43,7 +44,8 @@ public class JellyfinHandler {
             log.error("API KEY未设置");
             return;
         }
-        Tasks.scheduleAtFixedRate(this::run, time);
+        // 延迟10秒执行,防止重启后Jellyfin服务未启动完成
+        Tasks.scheduleAtFixedRate(this::run, 10, time, TimeUnit.SECONDS);
     }
 
     public void run() {
@@ -64,7 +66,6 @@ public class JellyfinHandler {
     public String getUserId() {
         NutMap nutMap = JellyfinUtil.getUsers(domain, key);
         if (nutMap == null) {
-            log.error("未获取到用户列表");
             return null;
         }
         List<NutMap> userList = nutMap.getList("Users", NutMap.class);
