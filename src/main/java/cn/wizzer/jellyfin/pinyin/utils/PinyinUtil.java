@@ -21,7 +21,12 @@ public class PinyinUtil {
         try {
             for (int i = 0; i < charArray.length; i++) {
                 if (Character.toString(charArray[i]).matches("[\\u4E00-\\u9FA5]+")) {
-                    pinyin.append(PinyinHelper.toHanyuPinyinStringArray(charArray[i], format)[0]);
+		    String[] pinyinArr = PinyinHelper.toHanyuPinyinStringArray(charArray[i], format);
+                    if (pinyinArr.length > 0) {
+                        pinyin.append(pinyinArr[0]);
+                    } else {
+                        pinyin.append(charArray[i]);
+                    }
                 } else {
                     pinyin.append(charArray[i]);
                 }
