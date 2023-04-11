@@ -20,4 +20,5 @@ TIME | 3600  | 周期扫描的时间间隔，单位秒
 # 编译说明
 
 * `mvn package nutzboot:shade` 生成可执行jar包
-* `docker build -t wizzer/jellyfin_pinyin:v1.0 . --platform=linux/amd64` Docker打包发布
+* `docker build -t wizzer/jellyfin_pinyin:v1.6 . --platform=linux/amd64` Docker打包发布
+* `docker build -t wizzer/jellyfin_pinyin:v1.6_arm . --platform=linux/arm64` Docker打包发布(for arm)
