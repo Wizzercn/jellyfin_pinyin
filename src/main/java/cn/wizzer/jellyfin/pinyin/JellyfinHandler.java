@@ -27,12 +27,14 @@ public class JellyfinHandler {
     private int skipCount = 0;
     private int time = 0;
     private String userId = "";
+    private boolean skip = true;
 
     public void init() {
         domain = System.getenv("URL");
         key = System.getenv("KEY");
         media = System.getenv("MEDIA");
         time = Integer.parseInt(Strings.sNull(System.getenv("TIME"), "3600"));
+        skip = Boolean.parseBoolean(Strings.sNull(System.getenv("SKIP"), "true"));
         log.infof("扫描媒体库: %s", media == null ? "全部" : media);
         if (Strings.isBlank(domain)) {
             log.info("服务器地址未设置,使用默认地址 http://127.0.0.1:8096");
@@ -99,12 +101,15 @@ public class JellyfinHandler {
                     log.error("服务器出错,请重启Jellyfin");
                     return;
                 }
-                if (Strings.isNotBlank(itemDetail.getString("ForcedSortName"))) {
+                if (skip && Strings.isNotBlank(itemDetail.getString("ForcedSortName"))) {
                     log.infof("跳过 %s", itemDetail.getString("Name"));
                     this.skipCount++;
                 } else {
                     log.infof("%s", itemDetail.getString("Name"));
                     String pinyin = PinyinUtil.getPingYin(itemDetail.getString("Name"));
+                    if (Strings.isNotBlank(pinyin) && pinyin.length() > 50) {
+                        pinyin = pinyin.substring(0, 50);
+                    }
                     itemDetail.setv("ForcedSortName", pinyin);
                     JellyfinUtil.postItem(domain, key, item.getString("Id"), itemDetail);
                     this.processCount++;
