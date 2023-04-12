@@ -89,10 +89,11 @@ public class JellyfinHandler {
     }
 
     public void renderItems(List<NutMap> items) {
-        List<String> folders = Arrays.asList("Folder", "Series", "Season", "CollectionFolder");
-        List<String> objects = Arrays.asList("Movie", "BoxSet", "Audio", "MusicAlbum", "MusicArtist", "Video", "Photo",
+        List<String> folders = Arrays.asList("Folder", "Season", "CollectionFolder");
+        List<String> objects = Arrays.asList("Series", "Movie", "BoxSet", "Audio", "MusicAlbum", "MusicArtist", "Video", "Photo",
                 "Episode");
         for (NutMap item : items) {
+            log.info(item.getString("Type"));
             if (folders.contains(item.getString("Type"))) {
                 this.renderFolder(item.getString("Id"), item.getString("CollectionType"));
             } else if (objects.contains(item.getString("Type"))) {
