@@ -5,7 +5,7 @@ ENV TIME 3600
 ENV URL "http://127.0.0.1:8096"
 ENV KEY ""
 ENV MEDIA ""
-ENV SKIP "false"
+ENV SKIP "true"
 
 WORKDIR /app
 CMD ["java","-jar","/app/jellyfin_pinyin.jar"]
