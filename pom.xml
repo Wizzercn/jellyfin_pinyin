@@ -6,10 +6,10 @@
 
     <groupId>cn.wizzer</groupId>
     <artifactId>jellyfin_pinyin</artifactId>
-    <version>1.7-SNAPSHOT</version>
+    <version>1.9-SNAPSHOT</version>
 
     <properties>
-        <nutzboot.version>2.5.0-SNAPSHOT</nutzboot.version>
+        <nutzboot.version>2.6.0-SNAPSHOT</nutzboot.version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.9</logback.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
