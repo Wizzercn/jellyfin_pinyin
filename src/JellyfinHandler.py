@@ -1,7 +1,6 @@
 import os
 import json
 import time
-import threading
 from PinyinUtil import PinyinUtil  # 需要实现PinyinUtil
 from JellyfinUtil import JellyfinUtil  # 需要实现JellyfinUtil
 import logging
@@ -14,7 +13,7 @@ class JellyfinHandler:
         self.media = ""     #需要处理的媒体库
         self.process_count = 0
         self.skip_count = 0
-        self.time = 0
+        self.time = 10
         self.user_id = ""
 
     def init(self):
@@ -34,8 +33,13 @@ class JellyfinHandler:
             return
         
         # 延迟10秒执行,防止重启后Jellyfin服务未启动完成
-        threading.Timer(10, self.run).start()
-        threading.Timer(self.time, self.run).start()
+        time.sleep(10)
+        self.run()
+        # 循环执行，每隔一段时间执行一次
+        while True:
+            time.sleep(self.time)
+            self.run()
+
 
     def run(self):
         self.user_id = self.get_user_id()
@@ -92,6 +96,10 @@ class JellyfinHandler:
                 else:
                     self.log.info(f"处理 {item_detail.get('Name')}")
                     item_detail["ForcedSortName"] = pinyin
+                    item_detail["SortName"] = pinyin
+                    # emby 锁定字段，否则不生效
+                    item_detail["LockedFields"] = ["SortName"]
+                    
                     JellyfinUtil.post_item(self.domain, self.key, item.get("Id"), item_detail)
                     self.process_count += 1
             else:
