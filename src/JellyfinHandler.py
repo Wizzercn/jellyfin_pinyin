@@ -98,7 +98,9 @@ class JellyfinHandler:
                     item_detail["ForcedSortName"] = pinyin
                     item_detail["SortName"] = pinyin
                     # emby 锁定字段，否则不生效
-                    item_detail["LockedFields"] = ["SortName"]
+                    # 判断self.domain路径是否包含emby字符串
+                    if "emby" in self.domain:
+                        item_detail["LockedFields"] = ["SortName"]
                     
                     JellyfinUtil.post_item(self.domain, self.key, item.get("Id"), item_detail)
                     self.process_count += 1
